@@ -28,7 +28,7 @@ def welcome_main_menu(message):
         bot.send_message(message.chat.id, "Перед вами инструмент бронирования переговорных комнат в компании Angels IT")
         time.sleep(2)
         bot.send_message(message.chat.id,
-                         "Представьтесь, пожалуйста!\nТак ваши бронирования будут отображаться в расписании")
+                         "Представьтесь, пожалуйста!\nВведите свои имя и фамилию.\nТак ваши бронирования будут отображаться в расписании")
         backend.new_user(message.from_user.id)
         bot.register_next_step_handler(message, get_user_name)
     elif new_user_data[0][1] is None:
