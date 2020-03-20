@@ -1,3 +1,4 @@
 # ignore files
 config.py
 db.db
+__pycache__/
