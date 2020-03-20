@@ -10,7 +10,7 @@ from telebot import apihelper, types
 import backend
 import config
 import frontend
-from frontend import States
+from frontend import Statements
 
 # Подключение самого бота
 bot = telebot.TeleBot(token=config.token, threaded=False)
@@ -115,23 +115,23 @@ def choose_next_action(call):
     state = data['st']
 
     cases = {
-        States.S_MAIN_MENU_REPLACE: main_menu_replace,
-        States.S_MAIN_MENU_ADD: main_menu_add,
-        States.S_SHOW_SCHEDULE_CHOOSE_DAY: show_schedule_choose_day,
-        States.S_SHOW_SCHEDULE_CALENDAR: show_schedule_calendar,
-        States.S_SHOW_SCHEDULE_PRINT: show_schedule_print,
-        States.S_RESERVE_CHOOSE_DAY: reserve_choose_day,
-        States.S_RESERVE_CHOOSE_ROOM: reserve_choose_room,
-        States.S_RESERVE_CALENDAR: reserve_calendar,
-        States.S_RESERVE_CHOOSE_START_TIME: reserve_choose_start_time,
-        States.S_RESERVE_CHOOSE_END_TIME: reserve_choose_end_time,
-        States.S_RESERVE_CHECK: reserve_check,
-        States.S_RESERVE_ERROR: reserve_error,
-        States.S_RESERVE_ADD_COMMENT: reserve_add_comment,
-        States.S_CANCEL_CHOOSE_RESERVE: cancel_choose_reserve,
-        States.S_CANCEL_RESERVE: cancel_reserve,
-        States.S_CHANGE_MONTH: change_month,
-        States.S_DO_NOTHING: do_nothing
+        Statements.S_MAIN_MENU_REPLACE: main_menu_replace,
+        Statements.S_MAIN_MENU_ADD: main_menu_add,
+        Statements.S_SHOW_SCHEDULE_CHOOSE_DAY: show_schedule_choose_day,
+        Statements.S_SHOW_SCHEDULE_CALENDAR: show_schedule_calendar,
+        Statements.S_SHOW_SCHEDULE_PRINT: show_schedule_print,
+        Statements.S_RESERVE_CHOOSE_DAY: reserve_choose_day,
+        Statements.S_RESERVE_CHOOSE_ROOM: reserve_choose_room,
+        Statements.S_RESERVE_CALENDAR: reserve_calendar,
+        Statements.S_RESERVE_CHOOSE_START_TIME: reserve_choose_start_time,
+        Statements.S_RESERVE_CHOOSE_END_TIME: reserve_choose_end_time,
+        Statements.S_RESERVE_CHECK: reserve_check,
+        Statements.S_RESERVE_ERROR: reserve_error,
+        Statements.S_RESERVE_ADD_COMMENT: reserve_add_comment,
+        Statements.S_CANCEL_CHOOSE_RESERVE: cancel_choose_reserve,
+        Statements.S_CANCEL_RESERVE: cancel_reserve,
+        Statements.S_CHANGE_MONTH: change_month,
+        Statements.S_DO_NOTHING: do_nothing
     }
 
     method = cases[state]
@@ -159,7 +159,7 @@ def main_menu_add(call):
 def show_schedule_choose_day(call):
     today = datetime.datetime.today()
     time_moment = today.replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
-    markup = frontend.create_choose_day_markup(time_moment, States.S_SHOW_SCHEDULE_PRINT)
+    markup = frontend.create_choose_day_markup(time_moment, Statements.S_SHOW_SCHEDULE_PRINT)
     bot.edit_message_text(chat_id=call.message.chat.id,
                           message_id=call.message.message_id,
                           text='На какой день интересует расписание?',
@@ -169,7 +169,7 @@ def show_schedule_choose_day(call):
 def show_schedule_calendar(call):
     today = datetime.datetime.today()
     time_moment = today.timestamp()
-    markup = frontend.create_calendar_markup(time_moment, States.S_SHOW_SCHEDULE_PRINT)
+    markup = frontend.create_calendar_markup(time_moment, Statements.S_SHOW_SCHEDULE_PRINT)
     bot.edit_message_text(chat_id=call.message.chat.id,
                           message_id=call.message.message_id,
                           text="Выберите дату:",
@@ -221,7 +221,7 @@ def reserve_choose_day(call):
     room_id = call_data['r']
     today = datetime.datetime.today()
     time_moment = today.replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
-    markup = frontend.create_choose_day_markup(time_moment, States.S_RESERVE_CHOOSE_START_TIME, room_id)
+    markup = frontend.create_choose_day_markup(time_moment, Statements.S_RESERVE_CHOOSE_START_TIME, room_id)
     bot.edit_message_text(chat_id=call.message.chat.id,
                           message_id=call.message.message_id,
                           text='*Когда* вы хотели бы забронировать комнату\?',
@@ -236,7 +236,7 @@ def reserve_calendar(call):
     text = f'Вы бронируете:\n{room_name}'
     today = datetime.datetime.today()
     time_moment = today.timestamp()
-    markup = frontend.create_calendar_markup(time_moment, States.S_RESERVE_CHOOSE_START_TIME, room_id)
+    markup = frontend.create_calendar_markup(time_moment, Statements.S_RESERVE_CHOOSE_START_TIME, room_id)
     bot.edit_message_text(chat_id=call.message.chat.id,
                           message_id=call.message.message_id,
                           text="Выберите дату:",
@@ -256,7 +256,7 @@ def reserve_choose_start_time(call):
                           message_id=call.message.message_id,
                           text=text,
                           parse_mode='MarkdownV2',
-                          reply_markup=frontend.create_hour_choose_menu(States.S_RESERVE_CHOOSE_END_TIME,
+                          reply_markup=frontend.create_hour_choose_menu(Statements.S_RESERVE_CHOOSE_END_TIME,
                                                                         time_moment, room_id))
 
 
@@ -272,7 +272,7 @@ def reserve_choose_end_time(call):
                           message_id=call.message.message_id,
                           text=text,
                           parse_mode='MarkdownV2',
-                          reply_markup=frontend.create_hour_choose_menu(States.S_RESERVE_CHECK,
+                          reply_markup=frontend.create_hour_choose_menu(Statements.S_RESERVE_CHECK,
                                                                         time_moment, room_id))
 
 

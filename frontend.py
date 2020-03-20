@@ -13,7 +13,7 @@ from telebot import types
 # r  - room
 #
 
-class States:
+class Statements:
     # Главное меню
     S_MAIN_MENU_REPLACE = '00'
     S_MAIN_MENU_ADD = '01'
