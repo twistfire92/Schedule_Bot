@@ -10,7 +10,7 @@ from telebot import apihelper, types
 import backend
 import config
 import frontend
-from config import States
+from frontend import States
 
 # Подключение самого бота
 bot = telebot.TeleBot(token=config.token, threaded=False)

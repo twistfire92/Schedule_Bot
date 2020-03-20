@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
-from config import States
 
 conn = sqlite3.connect("db.db")
 cursor = conn.cursor()
