@@ -1,2 +1,2 @@
-token = ''
-proxy = ''
+token = 'token'
+proxy = 'proxy'
