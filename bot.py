@@ -184,6 +184,8 @@ def main_menu_replace(call):
 
 
 def main_menu_add(call):
+    bot.edit_message_reply_markup(chat_id=call.message.chat.id,
+                                  message_id=call.message.message_id)
     main_menu(call.message.chat.id)
 
 

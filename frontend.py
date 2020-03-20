@@ -41,6 +41,7 @@ class States:
     S_CHANGE_MONTH = '777'
     S_DO_NOTHING = '666'
 
+
 # Создаем json структуру для отправки как сallback_data
 def create_callback_data(state,
                          **kwargs):  # Обязательным полем будет аргумент state - показывает куда переходить дальше
@@ -237,18 +238,18 @@ def create_button_main_menu_comment_markup(room_id, tm_start):
                                           callback_data=create_callback_data(States.S_MAIN_MENU_ADD)))
     return markup
 
-def create_buttons_print_schedule_markup(tm_start):
-    next_day = datetime.datetime.fromtimestamp(tm_start+86400)
-    prev_day = datetime.datetime.fromtimestamp(tm_start-86400)
-    markup = types.InlineKeyboardMarkup()
-    row = []
-    row.append(types.InlineKeyboardButton(text=f'<< {prev_day.day:0>2}.{prev_day.month:0>2}.{prev_day.year}',
-                                          callback_data=create_callback_data(States.S_SHOW_SCHEDULE_PRINT,
-                                                                             tm=tm_start-86400)))
 
-    row.append(types.InlineKeyboardButton(text=f'{next_day.day:0>2}.{next_day.month:0>2}.{next_day.year} >>',
-                                          callback_data=create_callback_data(States.S_SHOW_SCHEDULE_PRINT,
-                                                                             tm=tm_start+86400)))
+def create_buttons_print_schedule_markup(tm_start):
+    next_day = datetime.datetime.fromtimestamp(tm_start + 86400)
+    prev_day = datetime.datetime.fromtimestamp(tm_start - 86400)
+    markup = types.InlineKeyboardMarkup()
+    row = [types.InlineKeyboardButton(text=f'<< {prev_day.day:0>2}.{prev_day.month:0>2}.{prev_day.year}',
+                                      callback_data=create_callback_data(States.S_SHOW_SCHEDULE_PRINT,
+                                                                         tm=tm_start - 86400)),
+           types.InlineKeyboardButton(text=f'{next_day.day:0>2}.{next_day.month:0>2}.{next_day.year} >>',
+                                      callback_data=create_callback_data(States.S_SHOW_SCHEDULE_PRINT,
+                                                                         tm=tm_start + 86400))]
+
     markup.row(*row)
     markup.row(types.InlineKeyboardButton(text='Главное меню',
                                           callback_data=create_callback_data(States.S_MAIN_MENU_ADD)))
