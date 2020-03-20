@@ -407,13 +407,18 @@ def escape_charcters(text):
         text = text.replace(ch, '\\' + ch)
 
     text = text.replace('&b', '*')  # bold
-    text = text.replace('&u', '__')  # underline
+    text = text.replace('&u', '__') # underline
     text = text.replace('&i', '_')  # italic
     text = text.replace('&s', '~')  # strikethrough
     text = text.replace('&f', '`')  # fixed-width
     return text
 
 if __name__ == '__main__':
+    '''
+    Пришлось запустить все в бесконечном цикле с попыткой,
+    ибо соединение осуществляется через прокси,
+    а они иногда отваливаются.
+    '''
     while True:
         try:
             bot.polling()
