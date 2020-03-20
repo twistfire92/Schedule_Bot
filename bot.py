@@ -15,8 +15,7 @@ from frontend import States
 # Подключение самого бота
 bot = telebot.TeleBot(token=config.token, threaded=False)
 
-apihelper.proxy = {'https': config.proxy1,
-                   'https': config.proxy2}
+apihelper.proxy = {'https': config.proxy}
 
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'test')
