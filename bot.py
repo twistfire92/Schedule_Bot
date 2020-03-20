@@ -17,38 +17,6 @@ bot = telebot.TeleBot(token=config.token, threaded=False)
 
 apihelper.proxy = {'https': config.proxy}
 
-
-@bot.message_handler(func=lambda message: message.text.lower() == 'test')
-def test(message):
-    markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton(text='тест', callback_data='show_message'))
-    text = '*Жирный* _курсив_ Нормальный [Пользователь](tg://user?id=123268258)'
-    bot.send_message(message.chat.id, text, parse_mode='MarkdownV2', reply_markup=markup)
-
-
-@bot.callback_query_handler(func=lambda call: call.data == 'show_message')
-def test_call(call):
-    for obj in call.message.entities:
-        print(obj)
-
-    bot.edit_message_reply_markup(chat_id=call.message.chat.id,
-                                  message_id=call.message.message_id)
-
-
-# Фунция экранирует все необходимые символы и заменяет придуманные теги (&) на соответсвующие формату MarkdownV2
-def escape_charcters(text):
-    char_set = ['\\', '.', ',', '!', '-', '(', ')', '=', '+', '#', '[', ']', '~', '`', '|', '*', '_']
-    for ch in char_set:
-        text = text.replace(ch, '\\' + ch)
-
-    text = text.replace('&b', '*')  # bold
-    text = text.replace('&u', '__')  # underline
-    text = text.replace('&i', '_')  # italic
-    text = text.replace('&s', '~')  # strikethrough
-    text = text.replace('&f', '`')  # fixed-width
-    return text
-
-
 # НАЧАЛО РАБОТЫ
 # Предложить ввести имя и ожидание ввода, если пользователь не найден. Иначе - главное меню
 @bot.message_handler(commands=['start'])
@@ -432,6 +400,18 @@ def main_menu(chat_id):
                      parse_mode='MarkdownV2',
                      reply_markup=frontend.create_main_menu_markup())
 
+# Фунция экранирует все необходимые символы и заменяет придуманные теги (&) на соответсвующие формату MarkdownV2
+def escape_charcters(text):
+    char_set = ['\\', '.', ',', '!', '-', '(', ')', '=', '+', '#', '[', ']', '~', '`', '|', '*', '_']
+    for ch in char_set:
+        text = text.replace(ch, '\\' + ch)
+
+    text = text.replace('&b', '*')  # bold
+    text = text.replace('&u', '__')  # underline
+    text = text.replace('&i', '_')  # italic
+    text = text.replace('&s', '~')  # strikethrough
+    text = text.replace('&f', '`')  # fixed-width
+    return text
 
 if __name__ == '__main__':
     while True:
